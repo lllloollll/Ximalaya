@@ -5,12 +5,16 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import com.example.ximalaya.utils.LogUtil
 
 
 class BaseApplication: Application() {
     override fun onCreate() {
         super.onCreate()
+
+        //初始化LogUtil
+        LogUtil.init(this.packageName,0)
+
         val mXimalaya = CommonRequest.getInstanse()
         if (DTransferConstants.isRelease) {
             val mAppSecret = "8646d66d6abe2efd14f2891f9fd1c8af"
