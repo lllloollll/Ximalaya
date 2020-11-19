@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="#ffffff"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/album_cover_iv"
+        android:layout_width="68dp"
+        android:layout_height="65dp"
+        android:background="#009999"
+        android:scaleType="centerInside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/album_title_tv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/album_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="Title"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@id/album_cover_iv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/album_description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="Title"
+        android:textColor="#ff848484"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@id/album_cover_iv"
+        app:layout_constraintTop_toBottomOf="@id/album_title_tv" />
+
+    <TextView
+        android:id="@+id/album_paly_count_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="234.5万"
+        android:textColor="#ff848484"
+        android:textSize="7sp"
+        app:layout_constraintLeft_toRightOf="@id/album_cover_iv"
+        app:layout_constraintTop_toBottomOf="@id/album_description_tv" />
+
+    <TextView
+        android:id="@+id/album_content_size_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:text="234.5万"
+        android:textColor="#ff848484"
+        android:textSize="7sp"
+        app:layout_constraintLeft_toRightOf="@id/album_paly_count_tv"
+        app:layout_constraintTop_toBottomOf="@id/album_description_tv" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

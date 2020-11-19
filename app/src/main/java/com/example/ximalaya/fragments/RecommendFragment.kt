@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.ximalaya.R
+import com.example.ximalaya.adapters.RecommendListAdapter
 import com.example.ximalaya.base.BaseFragment
 import com.example.ximalaya.utils.Constants
 import com.example.ximalaya.utils.LogUtil
@@ -15,6 +18,7 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
+import kotlinx.android.synthetic.main.fragment_recommend.*
 
 /**
  * A simple [Fragment] subclass.
@@ -22,13 +26,23 @@ import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
 class RecommendFragment : BaseFragment() {
     private val TAG: String="RecommendFragment"
 
+    lateinit var rootView: View
+    lateinit var recommendRv:RecyclerView
+    lateinit var recommendListAdapter: RecommendListAdapter
+
     override fun onSubViewLoaded(
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): View {
         //获取 猜你喜欢专辑 接口的数据
         getRecommendData()
-        return layoutInflater.inflate(R.layout.fragment_recommend,container,false)
+        rootView=layoutInflater.inflate(R.layout.fragment_recommend,container,false)
+        //使用RecyclerView,设置布局管理器
+        recommendRv=rootView.findViewById(R.id.recommend_list)
+        recommendRv.layoutManager=LinearLayoutManager(context)
+        recommendListAdapter=RecommendListAdapter()
+        recommendRv.adapter=recommendListAdapter
+        return rootView
     }
 
     /**
@@ -43,6 +57,7 @@ class RecommendFragment : BaseFragment() {
                 for(i in p0!!.albumList){
                     LogUtil.d(TAG,"${i.albumTitle} : ${i.albumIntro}")
                 }
+                upRecommendUI(p0)
             }
 
             override fun onError(p0: Int, p1: String?) {
@@ -52,6 +67,9 @@ class RecommendFragment : BaseFragment() {
         })
     }
 
+    private fun upRecommendUI(gussLikeAlbumList: GussLikeAlbumList) {
+        recommendListAdapter.setData(gussLikeAlbumList.albumList)
+    }
 
 
 }
