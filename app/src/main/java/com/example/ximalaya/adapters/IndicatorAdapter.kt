@@ -10,25 +10,27 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView
 
-class IndicatorAdapter(context: Context?): CommonNavigatorAdapter() {
+class IndicatorAdapter(context: Context?) : CommonNavigatorAdapter() {
 
-    var list:Array<out String>?=null
+    var list: Array<out String>? = null
     lateinit var context: Context
+    lateinit var listener: OnIndicatorTabClickListener
 
     init {
-        this.context=context!!
+        this.context = context!!
         list = context?.resources?.getStringArray(R.array.indicator_title)
     }
+
     override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
         val simplePaperTitleView = ColorTransitionPagerTitleView(context)
-        simplePaperTitleView.run{
-            normalColor=Color.GRAY
-            selectedColor=Color.WHITE
-            text=list?.get(index)
+        simplePaperTitleView.run {
+            normalColor = Color.GRAY
+            selectedColor = Color.WHITE
+            text = list?.get(index)
             setTextSize(18F)
-            setOnClickListener(object :View.OnClickListener{
+            setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-
+                    listener.onTabClick(index)
                 }
 
             })
@@ -37,15 +39,23 @@ class IndicatorAdapter(context: Context?): CommonNavigatorAdapter() {
     }
 
     override fun getCount(): Int {
-        return list?.size?:0
+        return list?.size ?: 0
     }
 
     override fun getIndicator(context: Context?): IPagerIndicator {
-        val linePagerIndicator=LinePagerIndicator(context)
+        val linePagerIndicator = LinePagerIndicator(context)
         linePagerIndicator.run {
-            mode=LinePagerIndicator.MODE_WRAP_CONTENT
+            mode = LinePagerIndicator.MODE_WRAP_CONTENT
             setColors(Color.WHITE)
         }
         return linePagerIndicator
+    }
+
+    fun setOnIndicatorTabClickListener(listener: OnIndicatorTabClickListener) {
+        this.listener = listener
+    }
+
+    interface OnIndicatorTabClickListener {
+        fun onTabClick(index: Int)
     }
 }
