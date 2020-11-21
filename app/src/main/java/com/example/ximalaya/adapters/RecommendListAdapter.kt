@@ -8,9 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.ximalaya.R
 import com.ximalaya.ting.android.opensdk.model.album.Album
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
+import net.lucode.hackware.magicindicator.buildins.UIUtil
 
 /**
  *
@@ -61,17 +64,23 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
 
     class InnerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setData(data: Album) {
+            //设置图片圆角角度
+            val roundedCorners=RoundedCorners(UIUtil.dip2px(itemView.context,20.0))
+            //通过RequestOptions扩展功能，override:采样率，因为ImageView就这么大，可以压缩图片，降低内存消耗
+            val requestOption=RequestOptions.bitmapTransform(roundedCorners).override(300,300)
+            //显示圆角图片
             itemView.findViewById<ImageView>(R.id.album_cover_iv).run {
                 Glide.with(itemView.context)
-                    .load(data.coverUrlSmall)
+                    .load(data.coverUrlMiddle)
+                    .apply(requestOption)
                     .into(this)
             }
             itemView.findViewById<TextView>(R.id.album_title_tv).text = data.albumTitle
             itemView.findViewById<TextView>(R.id.album_description_tv).text = data.albumIntro
             itemView.findViewById<TextView>(R.id.album_paly_count_tv).text =
-                data.playCount.toString()
+                "播放数：${data.playCount/10000}.${data.playCount%10000/100}万"
             itemView.findViewById<TextView>(R.id.album_content_size_tv).text =
-                data.subscribeCount.toString()
+                "订阅数：${data.subscribeCount}"
         }
     }
 

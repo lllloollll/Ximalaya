@@ -3,15 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="#ffffff"
+    android:background="@drawable/shape_album_item_bg"
     android:padding="5dp">
 
     <ImageView
         android:id="@+id/album_cover_iv"
         android:layout_width="68dp"
         android:layout_height="65dp"
-        android:background="#009999"
-        android:scaleType="centerInside"
+        android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/album_title_tv"
         app:layout_constraintTop_toTopOf="parent" />
