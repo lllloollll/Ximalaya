@@ -49,6 +49,8 @@ class RecommendFragment : BaseFragment() {
 
         }
 
+        mUiLoader.setOnRetryClickListener(onRetryClickListener)
+
 
         //逻辑层对象
         //设置通知接口的注册
@@ -131,6 +133,14 @@ class RecommendFragment : BaseFragment() {
         if (recommendPresenter != null) {
             recommendPresenter.unRegisterViewCallback(iRecommendViewCallback)
         }
+    }
+
+    val onRetryClickListener = object : UILoader.OnRetryClickListener {
+        override fun onRetryClick() {
+            //重新获取数据
+            recommendPresenter.getRecommendList()
+        }
+
     }
 
 }

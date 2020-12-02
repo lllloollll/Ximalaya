@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import com.example.ximalaya.R
 import com.example.ximalaya.base.BaseApplication
 
@@ -34,6 +35,7 @@ abstract class UILoader : FrameLayout {
         init()
     }
 
+    private var mOnRetryListener: UILoader.OnRetryClickListener?=null
     var mLoadingView: View? = null
     var mSuccessView: View? = null
     var mErrorView: View? = null
@@ -80,7 +82,7 @@ abstract class UILoader : FrameLayout {
         mErrorView?.visibility =
             if (mCurrentStatus == UIStatus.NETWORK_ERROR) View.VISIBLE else View.GONE
 
-        //数据为空 
+        //数据为空
         mEmptyView ?: let {
             mEmptyView = getEmptyView()
             addView(mEmptyView)
@@ -106,12 +108,27 @@ abstract class UILoader : FrameLayout {
     }
 
     private fun getNetworkErrorView(): View {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_error_view, this, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_error_view, this, false)
+        view.findViewById<LinearLayout>(R.id.network_error_view).setOnClickListener(object :OnClickListener{
+            override fun onClick(v: View?) {
+                //重新获取数据
+                mOnRetryListener?.onRetryClick()
+            }
+        })
+        return view
     }
 
     abstract fun getSuccessView(container: ViewGroup): View
 
     private fun getLoadingView(): View {
         return LayoutInflater.from(context).inflate(R.layout.fragment_loading_view, this, false)
+    }
+    
+    fun setOnRetryClickListener(listener:OnRetryClickListener){
+        this.mOnRetryListener=listener
+    }
+    
+    interface OnRetryClickListener{
+        fun onRetryClick()
     }
 }
