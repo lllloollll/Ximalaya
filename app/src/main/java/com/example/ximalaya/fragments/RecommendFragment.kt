@@ -15,6 +15,7 @@ import com.example.ximalaya.R
 import com.example.ximalaya.adapters.RecommendListAdapter
 import com.example.ximalaya.base.BaseFragment
 import com.example.ximalaya.interfaces.IRecommendViewCallback
+import com.example.ximalaya.presenters.AlbumDetailPresenter
 import com.example.ximalaya.presenters.RecommendPresenter
 import com.example.ximalaya.utils.LogUtil
 import com.example.ximalaya.views.UILoader
@@ -148,7 +149,11 @@ class RecommendFragment : BaseFragment() {
     }
 
     val recommendItemClickListener=object :RecommendListAdapter.OnRecommendItemClickListener{
-        override fun onItemClick(position: Int) {
+        override fun onItemClick(
+            position: Int,
+            get: Album
+        ) {
+            AlbumDetailPresenter.getInstance().setTargetAlbum(get)
             //条目的点击跳转
             val intent = Intent(context,DetailActivity::class.java)
             startActivity(intent)

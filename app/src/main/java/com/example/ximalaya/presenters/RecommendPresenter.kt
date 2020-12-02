@@ -25,7 +25,7 @@ import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
  */
 class RecommendPresenter : IRecommendPresenter {
 
-
+    private constructor()
     private val TAG: String = "RecommendPresenter"
     private val mCallbacks = arrayListOf<IRecommendViewCallback>()
 
@@ -35,7 +35,7 @@ class RecommendPresenter : IRecommendPresenter {
         /**
          * 懒汉式单例
          */
-        public fun getInstance(): RecommendPresenter {
+        fun getInstance(): RecommendPresenter {
             if (instance == null) {
                 synchronized(RecommendPresenter.javaClass) {
                     if (instance == null) {

@@ -1,6 +1,5 @@
 package com.example.ximalaya.adapters
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.ximalaya.R
 import com.example.ximalaya.utils.LogUtil
-import com.example.ximalaya.views.UILoader
 import com.ximalaya.ting.android.opensdk.model.album.Album
-import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 
 /**
@@ -102,6 +99,9 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
         this.mItemClickListener=itemClickListener
     }
     interface OnRecommendItemClickListener{
-        fun onItemClick(position: Int)
+        fun onItemClick(
+            position: Int,
+            data: Album
+        )
     }
 }
