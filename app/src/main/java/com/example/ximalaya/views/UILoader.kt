@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.example.ximalaya.R
@@ -25,9 +24,9 @@ import com.example.ximalaya.base.BaseApplication
  * @Version:        1.0
  */
 abstract class UILoader : FrameLayout {
-    constructor(context: Context) : super(context, null)
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet, 0)
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
+    constructor(context: Context) : this(context,null)
+    constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
+    constructor(context: Context, attributeSet: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attributeSet,
         defStyleAttr

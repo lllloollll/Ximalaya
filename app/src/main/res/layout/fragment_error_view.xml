@@ -8,6 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="網絡錯誤，點擊屏幕重試..."/>
+        android:text="網絡錯誤，點擊屏幕重試!"/>
 
 </LinearLayout>

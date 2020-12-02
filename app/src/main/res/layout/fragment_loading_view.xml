@@ -2,12 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
+    <com.example.ximalaya.views.LoadingView
+        android:layout_gravity="center"
+        android:scaleType="centerInside"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+
     <TextView
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="LOADING VIEW" />
+        android:text="正在玩命加载中..." />
 
 </LinearLayout>
