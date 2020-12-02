@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.ximalaya.R
+import com.example.ximalaya.utils.LogUtil
 import com.example.ximalaya.views.UILoader
 import com.ximalaya.ting.android.opensdk.model.album.Album
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
@@ -30,7 +31,9 @@ import net.lucode.hackware.magicindicator.buildins.UIUtil
  * @Version:        1.0
  */
 class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHolder>() {
+    private var mItemClickListener: OnRecommendItemClickListener?=null
     var mData: ArrayList<Album>
+    private val TAG = "RecommendListAdapter"
 
     init {
         mData = arrayListOf()
@@ -50,6 +53,13 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
     override fun onBindViewHolder(holder: InnerHolder, position: Int) {
         //设置数据
         holder.itemView.setTag(position)
+        //设置itemView点击事件
+        holder.itemView.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                LogUtil.d(TAG,"item view click position --> ${v?.tag}")
+                mItemClickListener?.onItemClick(position,mData.get(position))
+            }
+        })
         holder.setData(mData.get(position))
     }
 
@@ -66,9 +76,9 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
     class InnerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setData(data: Album) {
             //设置图片圆角角度
-            val roundedCorners=RoundedCorners(UIUtil.dip2px(itemView.context,20.0))
+            val roundedCorners = RoundedCorners(UIUtil.dip2px(itemView.context, 20.0))
             //通过RequestOptions扩展功能，override:采样率，因为ImageView就这么大，可以压缩图片，降低内存消耗
-            val requestOption=RequestOptions.bitmapTransform(roundedCorners).override(300,300)
+            val requestOption = RequestOptions.bitmapTransform(roundedCorners).override(300, 300)
             //显示圆角图片
             itemView.findViewById<ImageView>(R.id.album_cover_iv).run {
                 Glide.with(itemView.context)
@@ -79,11 +89,19 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
             itemView.findViewById<TextView>(R.id.album_title_tv).text = data.albumTitle
             itemView.findViewById<TextView>(R.id.album_description_tv).text = data.albumIntro
             itemView.findViewById<TextView>(R.id.album_paly_count_tv).text =
-                "播放数：${data.playCount/10000}.${data.playCount%10000/100}万"
+                "播放数：${data.playCount / 10000}.${data.playCount % 10000 / 100}万"
             itemView.findViewById<TextView>(R.id.album_content_size_tv).text =
                 "订阅数：${data.subscribeCount}"
         }
     }
 
-
+    /**
+     * 将item点击事件 传递给veiw层处理
+     */
+    fun setOnItemClickListener(itemClickListener:OnRecommendItemClickListener){
+        this.mItemClickListener=itemClickListener
+    }
+    interface OnRecommendItemClickListener{
+        fun onItemClick(position: Int)
+    }
 }

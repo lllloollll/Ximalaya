@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.viewpager.widget.ViewPager
 import com.example.ximalaya.adapters.IndicatorAdapter
 import com.example.ximalaya.adapters.MainContentAdapter
+import com.example.ximalaya.base.BaseActivity
 import com.example.ximalaya.utils.FragmentCreator
 import com.example.ximalaya.utils.LogUtil
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
@@ -18,7 +19,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import java.util.*
 import kotlin.math.log
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     companion object {
         val TAG = "MainActivity"

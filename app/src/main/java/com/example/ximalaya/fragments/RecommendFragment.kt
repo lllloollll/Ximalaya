@@ -1,6 +1,7 @@
 package com.example.ximalaya.fragments
 
 
+import android.content.Intent
 import android.graphics.Rect
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ximalaya.DetailActivity
 
 import com.example.ximalaya.R
 import com.example.ximalaya.adapters.RecommendListAdapter
@@ -91,6 +93,8 @@ class RecommendFragment : BaseFragment() {
         //设置适配器
         recommendListAdapter = RecommendListAdapter()
         recommendRv.adapter = recommendListAdapter
+        //条目的点击跳转
+        recommendListAdapter.setOnItemClickListener(recommendItemClickListener)
         return rootView
     }
 
@@ -141,6 +145,14 @@ class RecommendFragment : BaseFragment() {
             recommendPresenter.getRecommendList()
         }
 
+    }
+
+    val recommendItemClickListener=object :RecommendListAdapter.OnRecommendItemClickListener{
+        override fun onItemClick(position: Int) {
+            //条目的点击跳转
+            val intent = Intent(context,DetailActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }
