@@ -31,5 +31,20 @@ interface IRecommendViewCallback {
      */
     fun onLoadMore(result: List<Album>)
 
+    /**
+     * 网络错误
+     */
+    fun onNetworkError()
+
+    /**
+     * 数据为空
+     */
+    fun onEmpty()
+
+    /**
+     * 加载中
+     */
+    fun onLoading()
+
 
 }

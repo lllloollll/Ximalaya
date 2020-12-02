@@ -61,7 +61,14 @@ class RecommendPresenter : IRecommendPresenter {
 
     override fun getRecommendList() {
         //获取推荐内容
+        updateLoading()
         getRecommendData()
+    }
+
+    private fun updateLoading() {
+        for (i in mCallbacks){
+            i.onLoading()
+        }
     }
 
     override fun pull2RefreshMore() {
@@ -89,15 +96,29 @@ class RecommendPresenter : IRecommendPresenter {
 
             override fun onError(p0: Int, p1: String?) {
                 LogUtil.d(TAG, "error code is --> $p0,error message is --> $p1")
+                handlerError()
             }
 
         })
     }
 
+    private fun handlerError() {
+        for (i in mCallbacks)
+            i.onNetworkError()
+    }
+
     private fun handlerRecommendResult(i: MutableList<Album>) {
-        //通知UI更新
-        for (j in mCallbacks) {
-            j.onRecommendListLoaded(i)
+        if (i != null) {
+            if (i.size == 0) {
+                for (j in mCallbacks) {
+                    j.onNetworkError()
+                }
+            } else {
+                //通知UI更新
+                for (j in mCallbacks) {
+                    j.onRecommendListLoaded(i)
+                }
+            }
         }
     }
 }

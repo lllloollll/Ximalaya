@@ -2,7 +2,6 @@ package com.example.ximalaya.fragments
 
 
 import android.graphics.Rect
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,14 +14,9 @@ import com.example.ximalaya.adapters.RecommendListAdapter
 import com.example.ximalaya.base.BaseFragment
 import com.example.ximalaya.interfaces.IRecommendViewCallback
 import com.example.ximalaya.presenters.RecommendPresenter
-import com.example.ximalaya.utils.Constants
 import com.example.ximalaya.utils.LogUtil
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
+import com.example.ximalaya.views.UILoader
 import com.ximalaya.ting.android.opensdk.model.album.Album
-import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
-import kotlinx.android.synthetic.main.fragment_recommend.*
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 
 /**
@@ -34,6 +28,8 @@ class RecommendFragment : BaseFragment() {
     lateinit var rootView: View
     lateinit var recommendRv: RecyclerView
     lateinit var recommendListAdapter: RecommendListAdapter
+    lateinit var mUiLoader: UILoader
+
 
     //获取逻辑层对象
     private val recommendPresenter: RecommendPresenter
@@ -46,8 +42,30 @@ class RecommendFragment : BaseFragment() {
         layoutInflater: LayoutInflater,
         container: ViewGroup?
     ): View {
-        //获取 猜你喜欢专辑 接口的数据
-//        getRecommendData()
+        mUiLoader = object : UILoader(context!!) {
+            override fun getSuccessView(container: ViewGroup): View {
+                return createSuccessView(layoutInflater, container)
+            }
+
+        }
+
+
+        //逻辑层对象
+        //设置通知接口的注册
+        recommendPresenter.registerViewCallback(iRecommendViewCallback)
+        recommendPresenter.getRecommendList()
+
+        if (mUiLoader.parent is ViewGroup) {
+            ((mUiLoader.parent) as ViewGroup).removeView(mUiLoader)
+        }
+//        return rootView
+        return mUiLoader
+    }
+
+    private fun createSuccessView(
+        layoutInflater: LayoutInflater,
+        container: ViewGroup
+    ): View {
         rootView = layoutInflater.inflate(R.layout.fragment_recommend, container, false)
         //使用RecyclerView,设置布局管理器
         recommendRv = rootView.findViewById(R.id.recommend_list)
@@ -71,19 +89,31 @@ class RecommendFragment : BaseFragment() {
         //设置适配器
         recommendListAdapter = RecommendListAdapter()
         recommendRv.adapter = recommendListAdapter
-
-        //逻辑层对象
-        //设置通知接口的注册
-        recommendPresenter.registerViewCallback(iRecommendViewCallback)
-        recommendPresenter.getRecommendList()
         return rootView
     }
 
     val iRecommendViewCallback = object : IRecommendViewCallback {
+        override fun onNetworkError() {
+            LogUtil.d(TAG, "NetworkError")
+            mUiLoader.updateStatus(UILoader.UIStatus.NETWORK_ERROR)
+        }
+
+        override fun onEmpty() {
+            LogUtil.d(TAG, "Empty")
+            mUiLoader.updateStatus(UILoader.UIStatus.EMPTY)
+        }
+
+        override fun onLoading() {
+            LogUtil.d(TAG, "Loading")
+            mUiLoader.updateStatus(UILoader.UIStatus.LOADING)
+        }
+
         override fun onRecommendListLoaded(result: List<Album>) {
             //当获取推荐内容，该方法就会被调用成功
             //拿到数据，更新UI
+            LogUtil.d(TAG, "onRecommendList")
             recommendListAdapter.setData(result)
+            mUiLoader.updateStatus(UILoader.UIStatus.SUCCESS)
         }
 
         override fun onRefreshMore(rusult: List<Album>) {

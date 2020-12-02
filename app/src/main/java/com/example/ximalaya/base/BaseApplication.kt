@@ -5,12 +5,20 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.os.Handler
 import com.example.ximalaya.utils.LogUtil
 
 
 class BaseApplication: Application() {
+
+    companion object{
+        private lateinit var sHandler: Handler
+        fun getHandler():Handler= sHandler
+    }
     override fun onCreate() {
         super.onCreate()
+
+        sHandler=Handler()
 
         //初始化LogUtil
         LogUtil.init(this.packageName,0)
