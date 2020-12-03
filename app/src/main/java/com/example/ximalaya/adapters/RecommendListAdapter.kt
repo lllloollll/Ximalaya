@@ -28,7 +28,7 @@ import net.lucode.hackware.magicindicator.buildins.UIUtil
  * @Version:        1.0
  */
 class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHolder>() {
-    private var mItemClickListener: OnRecommendItemClickListener?=null
+    private var mItemClickListener: OnRecommendItemClickListener? = null
     var mData: ArrayList<Album>
     private val TAG = "RecommendListAdapter"
 
@@ -51,10 +51,10 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
         //设置数据
         holder.itemView.setTag(position)
         //设置itemView点击事件
-        holder.itemView.setOnClickListener(object :View.OnClickListener{
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                LogUtil.d(TAG,"item view click position --> ${v?.tag}")
-                mItemClickListener?.onItemClick(position,mData.get(position))
+                LogUtil.d(TAG, "item view click position --> ${v?.tag}")
+                mItemClickListener?.onItemClick(position, mData.get(position))
             }
         })
         holder.setData(mData.get(position))
@@ -73,9 +73,10 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
     class InnerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setData(data: Album) {
             //设置图片圆角角度
-            val roundedCorners = RoundedCorners(UIUtil.dip2px(itemView.context, 20.0))
+            val roundedCorners = RoundedCorners(UIUtil.dip2px(itemView.context, 10.0))
             //通过RequestOptions扩展功能，override:采样率，因为ImageView就这么大，可以压缩图片，降低内存消耗
-            val requestOption = RequestOptions.bitmapTransform(roundedCorners).override(300, 300)
+            val requestOption = RequestOptions.bitmapTransform(roundedCorners)
+                .override(UIUtil.dip2px(itemView.context, 68.0), UIUtil.dip2px(itemView.context, 65.0))
             //显示圆角图片
             itemView.findViewById<ImageView>(R.id.album_cover_iv).run {
                 Glide.with(itemView.context)
@@ -95,10 +96,11 @@ class RecommendListAdapter : RecyclerView.Adapter<RecommendListAdapter.InnerHold
     /**
      * 将item点击事件 传递给veiw层处理
      */
-    fun setOnItemClickListener(itemClickListener:OnRecommendItemClickListener){
-        this.mItemClickListener=itemClickListener
+    fun setOnItemClickListener(itemClickListener: OnRecommendItemClickListener) {
+        this.mItemClickListener = itemClickListener
     }
-    interface OnRecommendItemClickListener{
+
+    interface OnRecommendItemClickListener {
         fun onItemClick(
             position: Int,
             data: Album
