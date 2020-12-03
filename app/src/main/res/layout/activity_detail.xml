@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#555555"
     tools:context=".DetailActivity">
 
     <ImageView
@@ -13,6 +12,15 @@
         android:layout_height="150dp"
         android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+
+
+        android:id="@+id/view_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/iv_large_cover" />
 
     <ImageView
         android:id="@+id/iv_small_cover"
@@ -27,27 +35,37 @@
     <TextView
         android:id="@+id/tv_album_title"
         android:layout_width="wrap_content"
-        android:lines="1"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:lines="1"
         android:text="标题"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintLeft_toRightOf="@id/iv_small_cover"
-        app:layout_constraintTop_toTopOf="@id/iv_small_cover" />
+        app:layout_constraintBottom_toTopOf="@id/view_bar"
+        app:layout_constraintLeft_toRightOf="@id/iv_small_cover" />
 
     <TextView
         android:id="@+id/tv_album_author"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:text="标题"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/sub_text_title"
         android:textSize="12sp"
         app:layout_constraintLeft_toRightOf="@id/iv_small_cover"
-        app:layout_constraintTop_toBottomOf="@id/tv_album_title" />
+        app:layout_constraintTop_toTopOf="@id/view_bar" />
+
+    <Button
+        android:layout_width="75dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="14dp"
+        android:background="@drawable/shape_subscription_bg"
+        android:text="+ 订阅"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="@id/view_bar"
+        app:layout_constraintTop_toTopOf="@id/view_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

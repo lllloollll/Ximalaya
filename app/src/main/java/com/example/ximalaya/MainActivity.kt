@@ -21,9 +21,7 @@ import kotlin.math.log
 
 class MainActivity : BaseActivity() {
 
-    companion object {
-        val TAG = "MainActivity"
-    }
+    val TAG = "MainActivity"
 
     lateinit var indicatorAdapter: IndicatorAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,12 +54,12 @@ class MainActivity : BaseActivity() {
 
     private fun initView() {
         val magicIndicator = main_indicator as MagicIndicator
-        magicIndicator.setBackgroundColor(this.resources.getColor(R.color.main_color))
+//        magicIndicator.setBackgroundColor(this.resources.getColor(R.color.main_color))
 
         //设置indicator的适配器
         val commonNavigator = CommonNavigator(this)
         indicatorAdapter = IndicatorAdapter(applicationContext)
-        commonNavigator.isAdjustMode=true
+        commonNavigator.isAdjustMode = true
         commonNavigator.adapter = indicatorAdapter
 
         //设置ViewPager适配器
