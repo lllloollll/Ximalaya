@@ -16,6 +16,9 @@ package com.example.ximalaya.utils
 class Constants {
     companion object{
         //推荐专辑数量
-        val RECOMMEND_COUNT=20
+        val COUNT_RECOMMEND=20
+
+        //默认请求专辑数量
+        val COUNT_DEFAULT=50
     }
 }

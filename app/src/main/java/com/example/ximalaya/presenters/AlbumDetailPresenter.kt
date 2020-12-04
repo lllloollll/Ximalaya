@@ -3,7 +3,14 @@ package com.example.ximalaya.presenters
 import com.example.ximalaya.interfaces.IAlbumDetailPresenter
 import com.example.ximalaya.interfaces.IAlbumDetailViewCallback
 import com.example.ximalaya.interfaces.IRecommendViewCallback
+import com.example.ximalaya.utils.Constants
+import com.example.ximalaya.utils.LogUtil
+import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
+import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
+import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
 import com.ximalaya.ting.android.opensdk.model.album.Album
+import com.ximalaya.ting.android.opensdk.model.track.Track
+import com.ximalaya.ting.android.opensdk.model.track.TrackList
 
 /**
  *
@@ -33,6 +40,7 @@ class AlbumDetailPresenter : IAlbumDetailPresenter {
         }
     }
 
+    private val TAG: String = "AlbumDetailPresenter"
     private var mTargetAlbum: Album? = null
     private val mCallbacks = arrayListOf<IAlbumDetailViewCallback>()
 
@@ -66,7 +74,26 @@ class AlbumDetailPresenter : IAlbumDetailPresenter {
     }
 
     override fun getAlbumDetail(id: Int, page: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //根据id和页码获取专辑
+        val map = hashMapOf<String, String>()
+        map.put(DTransferConstants.ALBUM_ID, id.toString())
+        map.put(DTransferConstants.SORT, "asc")
+        map.put(DTransferConstants.PAGE, page.toString())
+        map.put(DTransferConstants.PAGE_SIZE,Constants.COUNT_DEFAULT.toString())
+        CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
+            override fun onSuccess(p0: TrackList?) {
+                p0?.run {
+
+                    LogUtil.d(TAG, "tracklist size --> ${tracks.size}")
+                }
+            }
+
+            override fun onError(p0: Int, p1: String?) {
+                LogUtil.d(TAG, "error code --> $p0")
+                p1?.let { LogUtil.d(TAG, "error content --> $it") }
+            }
+
+        })
     }
 
     fun setTargetAlbum(targetAlbum: Album) {

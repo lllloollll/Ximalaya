@@ -85,7 +85,7 @@ class RecommendPresenter : IRecommendPresenter {
      */
     private fun getRecommendData() {
         val map = hashMapOf<String, String>()
-        map.put(DTransferConstants.LIKE_COUNT, "${Constants.RECOMMEND_COUNT}")
+        map.put(DTransferConstants.LIKE_COUNT, "${Constants.COUNT_RECOMMEND}")
         CommonRequest.getGuessLikeAlbum(map, object : IDataCallBack<GussLikeAlbumList> {
             override fun onSuccess(p0: GussLikeAlbumList?) {
                 for (i in p0!!.albumList) {

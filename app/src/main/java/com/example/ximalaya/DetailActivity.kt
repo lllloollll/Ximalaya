@@ -26,6 +26,7 @@ class DetailActivity : BaseActivity() {
     private lateinit var tvAuthor: TextView
     private lateinit var ivLargeCover: ImageView
     private lateinit var ivSmallCover: ImageView
+    private var mCurrentPage=1  //页码默认为1，需要大于0
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +51,11 @@ class DetailActivity : BaseActivity() {
 
     private val viewCallback = object : IAlbumDetailViewCallback {
         override fun onAlbumload(album: Album) {
+
+
+            //获取专辑的详细内容
+            mAlbumDetailPresenter.getAlbumDetail(album.id.toInt(),mCurrentPage)
+
             tvTitle.text = album.albumTitle
             tvAuthor.text = album.announcer.nickname
 
