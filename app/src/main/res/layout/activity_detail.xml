@@ -106,10 +106,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_detail_play_icon" />
 
+    <!--    去掉顶部和底部的阴影-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/view_bar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

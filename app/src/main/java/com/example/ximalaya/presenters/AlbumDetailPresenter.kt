@@ -83,8 +83,9 @@ class AlbumDetailPresenter : IAlbumDetailPresenter {
         CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
             override fun onSuccess(p0: TrackList?) {
                 p0?.run {
-
                     LogUtil.d(TAG, "tracklist size --> ${tracks.size}")
+                    //成功获取数据，通知view更新UI
+                    handlerAlbumDetailResult(tracks)
                 }
             }
 
@@ -94,6 +95,11 @@ class AlbumDetailPresenter : IAlbumDetailPresenter {
             }
 
         })
+    }
+
+    private fun handlerAlbumDetailResult(tracks:List<Track>) {
+        for (mCallback in mCallbacks)
+            mCallback.onDetailListLoaded(tracks)
     }
 
     fun setTargetAlbum(targetAlbum: Album) {

@@ -8,10 +8,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.ximalaya.adapters.DetailListAdapter
 import com.example.ximalaya.base.BaseActivity
 import com.example.ximalaya.interfaces.IAlbumDetailViewCallback
 import com.example.ximalaya.presenters.AlbumDetailPresenter
@@ -26,7 +29,8 @@ class DetailActivity : BaseActivity() {
     private lateinit var tvAuthor: TextView
     private lateinit var ivLargeCover: ImageView
     private lateinit var ivSmallCover: ImageView
-    private var mCurrentPage=1  //页码默认为1，需要大于0
+    private lateinit var rvDetail: RecyclerView
+    private var mCurrentPage = 1  //页码默认为1，需要大于0
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +46,22 @@ class DetailActivity : BaseActivity() {
         mAlbumDetailPresenter.registerViewCallback(viewCallback)
     }
 
+    private lateinit var mAdapter: DetailListAdapter
+
     private fun initView() {
         tvTitle = findViewById<TextView>(R.id.tv_album_title)
         tvAuthor = findViewById<TextView>(R.id.tv_album_author)
         ivLargeCover = findViewById(R.id.iv_large_cover)
         ivSmallCover = findViewById(R.id.iv_small_cover)
+        rvDetail = findViewById(R.id.rv_detail)
+
+        //RecyclerView
+        //1 设置布局管理器
+        rvDetail.layoutManager = LinearLayoutManager(this)
+        //2 设置适配器
+        mAdapter=DetailListAdapter()
+        rvDetail.adapter = mAdapter
+
     }
 
     private val viewCallback = object : IAlbumDetailViewCallback {
@@ -54,7 +69,7 @@ class DetailActivity : BaseActivity() {
 
 
             //获取专辑的详细内容
-            mAlbumDetailPresenter.getAlbumDetail(album.id.toInt(),mCurrentPage)
+            mAlbumDetailPresenter.getAlbumDetail(album.id.toInt(), mCurrentPage)
 
             tvTitle.text = album.albumTitle
             tvAuthor.text = album.announcer.nickname
@@ -85,7 +100,8 @@ class DetailActivity : BaseActivity() {
         }
 
         override fun onDetailListLoaded(tracks: List<Track>) {
-
+            //更新RecyclerView数据,将数据设置到适配器
+            mAdapter.setData(tracks)
         }
 
     }
