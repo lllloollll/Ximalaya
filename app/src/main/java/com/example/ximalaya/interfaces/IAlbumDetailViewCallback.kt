@@ -26,4 +26,9 @@ interface IAlbumDetailViewCallback {
      * 把Album传给UI
      */
     fun onAlbumload(album: Album)
+
+    /**
+     * 网络错误
+     */
+    fun onNetworkError(errorCode: Int, errorMsg: String?)
 }

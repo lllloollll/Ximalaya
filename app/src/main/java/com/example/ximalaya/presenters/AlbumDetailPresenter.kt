@@ -92,9 +92,16 @@ class AlbumDetailPresenter : IAlbumDetailPresenter {
             override fun onError(p0: Int, p1: String?) {
                 LogUtil.d(TAG, "error code --> $p0")
                 p1?.let { LogUtil.d(TAG, "error content --> $it") }
+                //网络错误,将数据通知给UI
+                handlerError(p0,p1)
             }
 
         })
+    }
+
+    private fun handlerError(errorCode: Int, errorMsg: String?) {
+        for (mCallback in mCallbacks)
+            mCallback.onNetworkError(errorCode,errorMsg)
     }
 
     private fun handlerAlbumDetailResult(tracks:List<Track>) {
