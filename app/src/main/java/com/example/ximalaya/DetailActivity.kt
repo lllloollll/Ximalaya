@@ -21,6 +21,7 @@ import com.example.ximalaya.adapters.DetailListAdapter
 import com.example.ximalaya.base.BaseActivity
 import com.example.ximalaya.interfaces.IAlbumDetailViewCallback
 import com.example.ximalaya.presenters.AlbumDetailPresenter
+import com.example.ximalaya.presenters.PlayerPresenter
 import com.example.ximalaya.views.UILoader
 import com.ximalaya.ting.android.opensdk.model.album.Album
 import com.ximalaya.ting.android.opensdk.model.track.Track
@@ -156,7 +157,9 @@ class DetailActivity : BaseActivity() {
 
     //item项点击事件,跳转到播放界面
     private val onItemClick=object :DetailListAdapter.ItemClickListener{
-        override fun onItemClick() {
+        override fun onItemClick(list: List<Track>, position: Int) {
+            //设置播放器的数据
+            PlayerPresenter.getInstance().setPlayList(list,position)
             val intent = Intent(applicationContext,PlayerActivity::class.java)
             startActivity(intent)
         }

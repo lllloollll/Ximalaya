@@ -67,7 +67,8 @@ class DetailListAdapter : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
         itemView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 mItemClickListener?.let {
-                    it.onItemClick()
+                    //参数：列表数据和位置position
+                    it.onItemClick(mDetailData,position)
                 }
             }
         })
@@ -90,6 +91,6 @@ class DetailListAdapter : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
     }
 
     interface ItemClickListener {
-        fun onItemClick()
+        fun onItemClick(list:List<Track>,position: Int)
     }
 }
