@@ -5,9 +5,120 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PlayerActivity">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="播放界面"/>
 
+    <TextView
+        android:id="@+id/tv_title_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="播放界面"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_player"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_player" />
+
+    <!--    进度条实现-->
+    <TextView
+        android:id="@+id/tv_tracks_current_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="00:00"
+        android:textColor="@color/icon_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/ll_player"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <SeekBar
+        android:id="@+id/sb_track"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:max="100"
+        app:layout_constraintBottom_toTopOf="@id/ll_player"
+        app:layout_constraintLeft_toRightOf="@id/tv_tracks_current_position"
+        app:layout_constraintRight_toLeftOf="@id/tv_tracks_duration" />
+
+    <TextView
+        android:id="@+id/tv_tracks_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="05:23"
+        android:textColor="@color/icon_gray"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/ll_player"
+        app:layout_constraintRight_toRightOf="parent" />
+    <!--    播放控制-->
+    <LinearLayout
+        android:id="@+id/ll_player"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_play_mode"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_ascending" />
+
+        <ImageView
+            android:id="@+id/iv_pre"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_previous" />
+
+        <ImageView
+            android:id="@+id/iv_play_stop"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_play_circle_o" />
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_next" />
+
+        <ImageView
+            android:id="@+id/iv_list"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_list" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
