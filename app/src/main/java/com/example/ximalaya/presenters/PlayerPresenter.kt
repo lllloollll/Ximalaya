@@ -4,8 +4,11 @@ import com.example.ximalaya.base.BaseApplication
 import com.example.ximalaya.interfaces.IPlayerPresenter
 import com.example.ximalaya.interfaces.IPlayerViewCallback
 import com.example.ximalaya.utils.LogUtil
+import com.ximalaya.ting.android.opensdk.model.advertis.Advertis
+import com.ximalaya.ting.android.opensdk.model.advertis.AdvertisList
 import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
+import com.ximalaya.ting.android.opensdk.player.advertis.IXmAdsStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl
 
 /**
@@ -13,7 +16,7 @@ import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl
  * @ProjectName:    Ximalaya
  * @Package:        com.example.ximalaya.presenters
  * @ClassName:      PlayerPresenter
- * @Description:     java类作用描述
+ * @Description:     播放器
  * @Author:         MMC
  * @CreateDate:     2020/12/5 16:23
  * @UpdateUser:     更新者
@@ -28,6 +31,7 @@ class PlayerPresenter : IPlayerPresenter {
 
     private constructor() {
         mPlayerManager = XmPlayerManager.getInstance(BaseApplication.getContext())
+        mPlayerManager?.addAdsStatusListener(iXmAdsStatusListener)
     }
 
     companion object {
@@ -58,7 +62,7 @@ class PlayerPresenter : IPlayerPresenter {
     }
 
     override fun play() {
-        if (isPlayListSet){
+        if (isPlayListSet) {
             mPlayerManager?.play()
         }
     }
@@ -101,5 +105,45 @@ class PlayerPresenter : IPlayerPresenter {
 
     override fun unRegisterViewCallback(t: IPlayerViewCallback) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    //==================广告相关的回调方法 start==============
+    private val iXmAdsStatusListener = object : IXmAdsStatusListener {
+        override fun onAdsStartBuffering() {
+            LogUtil.d(TAG,"onAdsStartBuffering")
+        }
+
+        override fun onAdsStopBuffering() {
+            LogUtil.d(TAG,"onAdsStopBuffering")
+
+        }
+
+        override fun onStartPlayAds(p0: Advertis?, p1: Int) {
+            LogUtil.d(TAG,"onStartPlayAds")
+
+        }
+
+        override fun onStartGetAdsInfo() {
+            LogUtil.d(TAG,"onStartGetAdsInfo")
+
+        }
+
+        override fun onGetAdsInfo(p0: AdvertisList?) {
+            LogUtil.d(TAG,"onGetAdsInfo")
+
+        }
+
+        override fun onCompletePlayAds() {
+            LogUtil.d(TAG,"onCompletePlayAds")
+
+        }
+
+        override fun onError(p0: Int, p1: Int) {
+            LogUtil.d(TAG,"onError error code --> $p0 , extra --> $p1")
+
+        }
+        //==================广告相关的回调方法 end==============
+
+
     }
 }
