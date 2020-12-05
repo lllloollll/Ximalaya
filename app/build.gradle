@@ -62,6 +62,4 @@ dependencies {
     implementation group: 'jp.wasabeef', name: 'glide-transformations', version: '4.0.1'
 
 
-
-
 }

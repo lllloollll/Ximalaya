@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat
  */
 class DetailListAdapter : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
 
+    private var mItemClickListener: DetailListAdapter.ItemClickListener? = null
     private val mDetailData = arrayListOf<Track>()
     //格式化时间
     private val mDurationSimpleDateFormat = SimpleDateFormat("mm:ss")
@@ -55,12 +56,21 @@ class DetailListAdapter : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
         tvOrder.text = position.toString()
         tvTitle.text = track.trackTitle
         track.playCount?.let {
-            if (it<10000) tvPlayCount.text=it.toString()
+            if (it < 10000) tvPlayCount.text = it.toString()
             else
-                tvPlayCount.text="${it/10000}.${it%10000/100}万"
+                tvPlayCount.text = "${it / 10000}.${it % 10000 / 100}万"
         }
-        tvDuration.text = mDurationSimpleDateFormat.format(track.duration*1000)
+        tvDuration.text = mDurationSimpleDateFormat.format(track.duration * 1000)
         tvUpdeDate.text = mDateSimpleDateFormat.format(track.updatedAt)
+
+        //设置itemView的点击事件
+        itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                mItemClickListener?.let {
+                    it.onItemClick()
+                }
+            }
+        })
     }
 
     fun setData(tracks: List<Track>) {
@@ -73,5 +83,13 @@ class DetailListAdapter : RecyclerView.Adapter<DetailListAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    }
+
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.mItemClickListener = itemClickListener
+    }
+
+    interface ItemClickListener {
+        fun onItemClick()
     }
 }

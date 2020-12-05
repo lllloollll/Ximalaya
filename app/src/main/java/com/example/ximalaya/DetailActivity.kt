@@ -1,5 +1,6 @@
 package com.example.ximalaya
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -86,6 +87,8 @@ class DetailActivity : BaseActivity() {
         //2 设置适配器
         mAdapter = DetailListAdapter()
         rvDetail.adapter = mAdapter
+        //设置item项点击事件
+        mAdapter.setItemClickListener(onItemClick)
         return view
     }
 
@@ -143,11 +146,19 @@ class DetailActivity : BaseActivity() {
     }
 
     //网络不加时点击屏幕 重新获取数据
-    val onRetryClick=object :UILoader.OnRetryClickListener{
+    private val onRetryClick=object :UILoader.OnRetryClickListener{
         override fun onRetryClick() {
             //重新获取专辑的详细内容
             Toast.makeText(applicationContext,"click",Toast.LENGTH_SHORT).show()
             mAlbumDetailPresenter.getAlbumDetail(mCurrentId, mCurrentPage)
+        }
+    }
+
+    //item项点击事件,跳转到播放界面
+    private val onItemClick=object :DetailListAdapter.ItemClickListener{
+        override fun onItemClick() {
+            val intent = Intent(applicationContext,PlayerActivity::class.java)
+            startActivity(intent)
         }
 
     }
