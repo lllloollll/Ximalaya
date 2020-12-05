@@ -1,5 +1,7 @@
 package com.example.ximalaya.interfaces
 
+import com.example.ximalaya.base.IBasePresenter
+
 /**
  *
  * @ProjectName:    Ximalaya
@@ -13,7 +15,7 @@ package com.example.ximalaya.interfaces
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-interface IAlbumDetailPresenter {
+interface IAlbumDetailPresenter:IBasePresenter<IAlbumDetailViewCallback> {
     /**
      * 下拉刷新
      */
@@ -29,14 +31,5 @@ interface IAlbumDetailPresenter {
      */
     fun getAlbumDetail(id:Int,page:Int)
 
-    /**
-     * 注册UI回调
-     */
-    fun registerViewCallback(callback: IAlbumDetailViewCallback)
-
-    /**
-     *  取消UI的回调注册
-     */
-    fun unRegisterViewCallback(callback: IAlbumDetailViewCallback)
 
 }

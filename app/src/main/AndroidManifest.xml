@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
 
     <application
         android:name=".base.BaseApplication"
@@ -30,5 +31,7 @@
             </intent-filter>
         </activity>
     </application>
+
+<!--    将音乐播放的服务放在另外的进程，和主进程互不影响，一个崩了不会影响到另一个，还可以申请到更多的内存-->
 
 </manifest>

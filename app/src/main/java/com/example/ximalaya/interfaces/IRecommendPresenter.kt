@@ -1,5 +1,6 @@
 package com.example.ximalaya.interfaces
 
+import com.example.ximalaya.base.IBasePresenter
 import com.ximalaya.ting.android.opensdk.model.album.Album
 
 /**
@@ -15,7 +16,7 @@ import com.ximalaya.ting.android.opensdk.model.album.Album
  * @UpdateRemark:   更新说明
  * @Version:        1.0
  */
-interface IRecommendPresenter {
+interface IRecommendPresenter:IBasePresenter<IRecommendViewCallback> {
     /**
      * 获取推荐内容
      */
@@ -31,15 +32,7 @@ interface IRecommendPresenter {
      */
     fun loadMore()
 
-    /**
-     * 注册UI回调
-     */
-    fun registerViewCallback(callback: IRecommendViewCallback)
 
-    /**
-     *  取消UI的回调注册
-     */
-    fun unRegisterViewCallback(callback: IRecommendViewCallback)
 
 
 }
